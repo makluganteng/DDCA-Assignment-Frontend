@@ -6,7 +6,7 @@ interface VoucherCardProps {
   imageLink: string;
 }
 
-export const VoucherCard = ({ title, imageLink }: VoucherCardProps) => {
+const VoucherCard = ({ title, imageLink }: VoucherCardProps) => {
   return (
     <Card variant="outlined">
       <div>
@@ -20,3 +20,5 @@ export const VoucherCard = ({ title, imageLink }: VoucherCardProps) => {
     </Card>
   );
 };
+
+export default VoucherCard;

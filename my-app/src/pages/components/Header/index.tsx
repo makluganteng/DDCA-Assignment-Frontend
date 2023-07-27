@@ -1,7 +1,7 @@
-import { RightHeaderPart } from "../RightHeaderPart";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import RightHeaderPart from "../RightHeaderPart";
 
-export const Header = () => {
+const Header = () => {
   return (
     <div className="flex justify-between align-center p-[20px] bg-[#6242fc]">
       <div className="flex align-center">
@@ -21,3 +21,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

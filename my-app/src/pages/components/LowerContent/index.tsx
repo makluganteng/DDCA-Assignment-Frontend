@@ -1,4 +1,4 @@
-export const LowerContent = () => {
+const LowerContent = () => {
   return (
     <div className="pt-[30px] px-[100px]">
       <div className="py-[10px]">
@@ -23,3 +23,5 @@ export const LowerContent = () => {
     </div>
   );
 };
+
+export default LowerContent;

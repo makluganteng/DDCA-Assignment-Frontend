@@ -1,4 +1,4 @@
-import { VoucherCard } from "../Card";
+import VoucherCard from "../Card";
 
 const data = [
   {
@@ -51,7 +51,7 @@ const data = [
   },
 ];
 
-export const NewestVoucher = () => {
+const NewestVoucher = () => {
   return (
     <div className="px-[100px] py-[50px]">
       <div className="text-[2rem] content">
@@ -67,3 +67,5 @@ export const NewestVoucher = () => {
     </div>
   );
 };
+
+export default NewestVoucher;

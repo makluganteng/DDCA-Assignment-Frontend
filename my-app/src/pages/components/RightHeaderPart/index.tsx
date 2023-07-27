@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Button, Input } from "@mui/material";
 import { useState } from "react";
 
-export const RightHeaderPart = () => {
+const RightHeaderPart = () => {
   const [state, setState] = useState(false);
   return (
     <div>
@@ -30,3 +30,5 @@ export const RightHeaderPart = () => {
     </div>
   );
 };
+
+export default RightHeaderPart;

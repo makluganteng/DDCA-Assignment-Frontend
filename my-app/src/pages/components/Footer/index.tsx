@@ -1,7 +1,7 @@
 import { Input } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <div className="flex py-[60px] px-[100px] bg-[#EFE1D1]">
       <div className="pr-[20px]">
@@ -30,3 +30,5 @@ export const Footer = () => {
     </div>
   );
 };
+
+export default Footer;
