@@ -28,18 +28,19 @@ export const postData = async (data: FormData) => {
       },
     };
 
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.post(
-        "http://localhost:8000/api/gift/createGift",
-        data,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.post(
+    //     "http://localhost:8000/api/gift/createGift",
+    //     data,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.post(url, data, config);
 
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -52,13 +53,14 @@ export const getGifts = async () => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.get("http://localhost:8000/api/gift", config);
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.get("http://localhost:8000/api/gift", config);
+    //   return result;
+    // }
     const result = await axios.get(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -71,16 +73,17 @@ export const deleteGift = async (id: string) => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.post(
-        `http://localhost:8000/api/gift/deleteVoucher/${id}`,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.post(
+    //     `http://localhost:8000/api/gift/deleteVoucher/${id}`,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.delete(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -94,17 +97,18 @@ export const updateGift = async (id: string, data: FormData) => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.post(
-        `http://localhost:8000/api/gift/updateVoucher/${id}`,
-        data,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.post(
+    //     `http://localhost:8000/api/gift/updateVoucher/${id}`,
+    //     data,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.put(url, data, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -118,17 +122,18 @@ export const adminLogin = async (data: AdminLogin) => {
       },
     };
 
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.post(
-        `http://localhost:8000/api/admin/login`,
-        data,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.post(
+    //     `http://localhost:8000/api/admin/login`,
+    //     data,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.post(url, data, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -142,17 +147,10 @@ export const getCategory = async () => {
       },
     };
 
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.get(
-        `http://localhost:8000/api/gift/getCategory`,
-        config
-      );
-      return result;
-    }
-
     const result = await axios.get(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -165,16 +163,17 @@ export const getVoucher = async (id: string) => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.get(
-        `http://localhost:8000/api/gift/getVoucher/${id}`,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.get(
+    //     `http://localhost:8000/api/gift/getVoucher/${id}`,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.get(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -187,17 +186,18 @@ export const buyVoucher = async (data: BuyVoucher) => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.post(
-        `http://localhost:8000/api/gift/buyVoucher`,
-        data,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.post(
+    //     `http://localhost:8000/api/gift/buyVoucher`,
+    //     data,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.post(url, data, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -210,16 +210,10 @@ export const getNewest = async () => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.get(
-        `http://localhost:8000/api/gift/getVoucherNewest`,
-        config
-      );
-      return result;
-    }
     const result = await axios.get(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -232,16 +226,17 @@ export const getVoucherByCategory = async (category: string) => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.get(
-        `http://localhost:8000/api/gift/getCategoryByName/${category}`,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.get(
+    //     `http://localhost:8000/api/gift/getCategoryByName/${category}`,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.get(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
@@ -254,17 +249,18 @@ export const addSubscriber = async (data: Subscriber) => {
         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
-    if (process.env.NODE_ENV === "development") {
-      const result = await axios.post(
-        `http://localhost:8000/api/subscription/addSubscription`,
-        data,
-        config
-      );
-      return result;
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   const result = await axios.post(
+    //     `http://localhost:8000/api/subscription/addSubscription`,
+    //     data,
+    //     config
+    //   );
+    //   return result;
+    // }
     const result = await axios.post(url, config);
     return result;
   } catch (e) {
+    console.log(e);
     throw new Error("Failed");
   }
 };
