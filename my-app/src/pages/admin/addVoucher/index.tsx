@@ -18,23 +18,33 @@ import {
 import axios from "axios";
 import exp from "constants";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
 
 const AddVoucher = () => {
   const [imageFile, setImageFile] = useState<File>();
+  const [categoryFile, setCategoryFile] = useState<File>();
   const [state, setState] = useState([true, false]);
   const [category, setCategory] = useState("");
   const [voucherName, setVoucherName] = useState("");
   const [voucherPrice, setVoucherPrice] = useState(0);
-
+  const router = useRouter();
   const handleImageChange = (file: File) => {
     setImageFile(file);
   };
 
   const clearImage = () => {
     setImageFile(undefined);
+  };
+
+  const handleCategoryChange = (file: File) => {
+    setCategoryFile(file);
+  };
+
+  const clearCategory = () => {
+    setCategoryFile(undefined);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,28 +67,60 @@ const AddVoucher = () => {
       alert("No image file selected");
       return;
     }
-    formData.append("image", imageFile);
-    formData.append("voucherName", voucherName);
-    formData.append("voucherPrice", voucherPrice.toString());
-    formData.append("category", category);
-    console.log("Form Data", formData);
-    if (formData.get("image") === null) {
-      alert("No image file selected");
-      return;
-    }
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    try {
-      const result = await postData(formData);
-      console.log("Result", result);
-      alert("Success");
-    } catch (e) {
-      alert("Error");
+    if (!categoryFile) {
+      formData.append("image", imageFile);
+      formData.append("voucherName", voucherName);
+      formData.append("voucherPrice", voucherPrice.toString());
+      formData.append("category", category);
+      if (formData.get("image") === null) {
+        alert("No image file selected");
+        return;
+      }
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      try {
+        const result = await postData(formData);
+        console.log("Result", result);
+        alert("Success");
+        return;
+      } catch (e) {
+        alert("Error");
+      }
+    } else {
+      formData.append("image", imageFile);
+      formData.append("image", categoryFile);
+      formData.append("voucherName", voucherName);
+      formData.append("voucherPrice", voucherPrice.toString());
+      formData.append("category", category);
+      console.log("Form Data", formData);
+      if (formData.get("image") === null) {
+        alert("No image file selected");
+        return;
+      }
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      try {
+        const result = await postData(formData);
+        console.log("Result", result);
+        alert("Success");
+        return;
+      } catch (e) {
+        alert("Error");
+      }
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token") === null || undefined) {
+      router.push("/");
+    }
+  }, []);
   return (
     <div className="handjet">
       <AdminHeader />
@@ -205,7 +247,28 @@ const AddVoucher = () => {
                             id="filled-basic"
                             label="New Category"
                             variant="filled"
+                            onChange={(e) => setCategory(e.target.value)}
                           />
+                          <h1>Input the Catgeory Cover</h1>
+                          <div className="flex flex-col align-center justify-center bg-white pt-[10px]">
+                            {!categoryFile && (
+                              <div>
+                                <ImageUploader
+                                  onImageChange={handleCategoryChange}
+                                />
+                              </div>
+                            )}
+                            {categoryFile && (
+                              <div className="flex justify-center align-center">
+                                <Image
+                                  src={URL.createObjectURL(categoryFile)}
+                                  alt="Selected Image"
+                                  width={300}
+                                  height={300}
+                                />
+                              </div>
+                            )}
+                          </div>
                         </div>
                       )}
 

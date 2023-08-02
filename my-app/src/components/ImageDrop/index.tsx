@@ -46,7 +46,7 @@ const ImageUploader = ({ onImageChange }: ImageUploaderProps) => {
               <span className="text-blue-600 underline">browse</span>
             </span>
           </span>
-          <input className="bg-white" {...getInputProps()} />
+          <input className="bg-white" {...getInputProps()} type="file" />
         </label>
       </div>
     </div>

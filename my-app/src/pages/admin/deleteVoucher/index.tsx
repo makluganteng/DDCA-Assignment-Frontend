@@ -4,6 +4,7 @@ import { Alert, Collapse, IconButton } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useRouter } from "next/router";
 
 const DeleteVoucher = () => {
   const [columns, setColumns] = useState<GridColDef[]>([]);
@@ -11,6 +12,8 @@ const DeleteVoucher = () => {
   const [selectedRows, setSelectedRows] = useState<any>();
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
+
+  const router = useRouter();
 
   const getVouchers = async () => {
     setColumns([
@@ -52,6 +55,10 @@ const DeleteVoucher = () => {
   };
 
   useEffect(() => {
+    if (localStorage.getItem("token") === null || undefined) {
+      router.push("/");
+      return;
+    }
     getVouchers();
   }, []);
 
