@@ -1,47 +1,63 @@
 import Header from "@/components/Header";
-import { adminLogin } from "../api/hello";
-import { useState } from "react";
-import { AdminLogin } from "@/schema/admin.schema";
+import { login } from "@/pages/api/hello";
+import { UserLogin } from "@/schema/user.schema";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Collapse, Alert, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Admin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginUser = () => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
 
   const router = useRouter();
 
   const handleClick = async () => {
-    if (!username || !password) {
-      alert("Please fill all the fields");
+    if (username === "" || password === "") {
+      alert("Please enter username and password");
       return;
     }
-    const data: AdminLogin = {
+    const data: UserLogin = {
       username,
       password,
     };
+
+    //login
     try {
-      const result = await adminLogin(data);
-      if (!result) {
+      const res = await login(data);
+      if (res.status === 200) {
+        console.log(res.data.token);
+        sessionStorage.setItem("customer_token", res.data.token);
+        sessionStorage.setItem("customer_username", username);
+        setOpen1(true);
+        router.push("/");
+      } else {
         setOpen(true);
       }
-      console.log(result.data.message);
-      localStorage.setItem("token", result.data.message);
-      setOpen1(true);
-      router.push("/admin/addVoucher");
-    } catch (e) {
+    } catch (err) {
       setOpen(true);
     }
   };
+
+  const handleRegister = () => {
+    router.push("/user/register");
+  };
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("customer_token");
+    if (token) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <div>
       <Header />
       <div className="flex flex-col align-center justify-center bg-white pt-[10px] mx-[400px] p-[20px] rounded mt-[50px] text-[black]">
         <div>
-          <h1 className="text-[40px]">Admin Login</h1>
+          <h1 className="text-[40px]">User Login</h1>
         </div>
         <div>
           <div className="flex flex-col">
@@ -59,12 +75,20 @@ const Admin = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="flex flex-col justify-center align-center pb-[10px]">
+          <div className="flex flex-col justify-center align-center">
             <button
               className="bg-[#DDE6ED] text-black rounded p-[10px] mt-[10px]"
               onClick={handleClick}
             >
               Login
+            </button>
+          </div>
+          <div className="flex flex-col justify-center align-center">
+            <button
+              className="bg-[#DDE6ED] text-black rounded p-[10px] mt-[10px]"
+              onClick={handleRegister}
+            >
+              Register
             </button>
           </div>
           <Collapse in={open}>
@@ -113,4 +137,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default LoginUser;

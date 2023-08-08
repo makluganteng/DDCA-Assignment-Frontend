@@ -70,7 +70,7 @@ const NewestVoucher = () => {
       <div className="text-[2rem] content">
         <h1>New Voucher just released this week</h1>
       </div>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {category ? (
           category.map((item: GetCategory, key) => (
             <div

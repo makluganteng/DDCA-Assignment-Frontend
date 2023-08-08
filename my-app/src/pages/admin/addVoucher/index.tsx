@@ -1,7 +1,8 @@
 import { AdminHeader } from "@/components/Admin/Header";
 import Dropdown from "@/components/Dropdown";
 import ImageUploader from "@/components/ImageDrop";
-import { postData } from "@/pages/api/hello";
+import { getCategory, postData } from "@/pages/api/hello";
+import { GetCategory } from "@/schema/category.schema";
 import {
   Button,
   Checkbox,
@@ -21,13 +22,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
-
 const AddVoucher = () => {
   const [imageFile, setImageFile] = useState<File>();
   const [categoryFile, setCategoryFile] = useState<File>();
   const [state, setState] = useState([true, false]);
   const [category, setCategory] = useState("");
+  const [option, setOption] = useState<GetCategory[]>([]);
   const [voucherName, setVoucherName] = useState("");
   const [voucherPrice, setVoucherPrice] = useState(0);
   const router = useRouter();
@@ -120,6 +120,16 @@ const AddVoucher = () => {
     if (localStorage.getItem("token") === null || undefined) {
       router.push("/");
     }
+    const fetchCategory = async () => {
+      try {
+        const res = await getCategory();
+        setOption(res.data.message);
+      } catch (e) {
+        console.log(e);
+        throw new Error("Error");
+      }
+    };
+    fetchCategory();
   }, []);
   return (
     <div className="handjet">
@@ -231,9 +241,12 @@ const AddVoucher = () => {
                               label="Age"
                               onChange={(e) => handleSelect(e)}
                             >
-                              {options.map((option, key) => (
-                                <MenuItem key={key} value={option}>
-                                  {option}
+                              {option.map((option: GetCategory, key) => (
+                                <MenuItem
+                                  key={key}
+                                  value={option.category_name}
+                                >
+                                  {option.category_name}
                                 </MenuItem>
                               ))}
                             </Select>

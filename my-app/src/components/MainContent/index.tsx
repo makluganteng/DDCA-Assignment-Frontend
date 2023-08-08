@@ -70,7 +70,7 @@ const MainContent = () => {
       <div className="text-[2rem]">
         <h1 className="content">Save more with Amazing GGS</h1>
       </div>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {category ? (
           category.map((item: GetCategory, key) => (
             <div

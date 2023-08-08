@@ -1,38 +1,35 @@
 import { AdminHeader } from "@/components/Admin/Header";
-import { deleteGift, getGifts } from "@/pages/api/hello";
-import { Alert, Collapse, IconButton } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
+import { deleteCategory, getCategory } from "@/pages/api/hello";
+import { Collapse, Alert, IconButton } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
+import CloseIcon from "@mui/icons-material/Close";
+import { useEffect, useState } from "react";
 
-const DeleteVoucher = () => {
+const DeleteCategory = () => {
   const [columns, setColumns] = useState<GridColDef[]>([]);
   const [rows, setRows] = useState<any[]>([]);
   const [selectedRows, setSelectedRows] = useState<any>();
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
-
   const router = useRouter();
 
-  const getVouchers = async () => {
+  const getCategories = async () => {
     setColumns([
       { field: "id", headerName: "ID", width: 70 },
-      { field: "voucherName", headerName: "Voucher Name", width: 130 },
-      { field: "voucherPrice", headerName: "Voucher Price", width: 130 },
-      { field: "category", headerName: "Category", width: 130 },
+      { field: "categoryName", headerName: "Category Name", width: 130 },
     ]);
-    const res = await getGifts();
+
+    const res = await getCategory();
     console.log(res);
     res.data.message.map((item: any) => {
+      console.log(item.category_name);
       setRows((prev) => [
         ...prev,
         {
           id: item.id,
-          voucherName: item.gift_card_name,
-          voucherPrice: item.gift_card_price,
-          category: item.category_name,
+          categoryName: item.category_name,
         },
       ]);
     });
@@ -51,8 +48,8 @@ const DeleteVoucher = () => {
           console.log(item);
         }
       });
-      const result = await deleteGift(selectedRows[0]);
-      console.log(result);
+      console.log(selectedRows[0]);
+      const result = await deleteCategory(selectedRows[0]);
       setOpen1(true);
       router.reload();
     } catch (e) {
@@ -65,16 +62,16 @@ const DeleteVoucher = () => {
       router.push("/");
       return;
     }
-    getVouchers();
+    getCategories();
   }, []);
 
   return (
     <div className="handjet">
       <AdminHeader />
       <div className="flex flex-col align-center justify-center px-[100px]">
-        <h1 className="text-[30px]">Delete Voucher</h1>
+        <h1 className="text-[30px]">Delete Category</h1>
       </div>
-      <div className="flex flex-col align-center justify-center bg-white pt-[10px] mx-[100px]">
+      <div className="flex flex-col align-center justify-center bg-white pt-[10px] mx-[100px] text-[black]">
         <DataGrid
           rows={rows}
           columns={columns}
@@ -153,7 +150,7 @@ const DeleteVoucher = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setOpen(false);
+                  setOpen1(false);
                 }}
               >
                 <CloseIcon fontSize="inherit" />
@@ -169,4 +166,4 @@ const DeleteVoucher = () => {
   );
 };
 
-export default DeleteVoucher;
+export default DeleteCategory;

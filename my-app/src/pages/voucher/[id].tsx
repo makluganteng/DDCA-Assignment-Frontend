@@ -2,25 +2,26 @@ import VoucherCard from "@/components/Card";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { buyVoucher, getVoucher, getVoucherByCategory } from "../api/hello";
+import {
+  buyVoucher,
+  getUserByUsername,
+  getVoucher,
+  getVoucherByCategory,
+} from "../api/hello";
 import { GetVoucher } from "@/schema/voucher.schema";
 
 const payment = [
   {
     title: "Touch nGo",
-    price: "RM 10",
   },
   {
-    title: "Touch nGo",
-    price: "RM 10",
+    title: "FPX / Online Bank",
   },
   {
-    title: "Touch nGo",
-    price: "RM 10",
+    title: "Razor Pay",
   },
   {
-    title: "Touch nGo",
-    price: "RM 10",
+    title: "Paypal",
   },
 ];
 
@@ -52,7 +53,21 @@ const Voucher = () => {
         alert("Something went wrong");
       }
     };
+    const fetchUser = async () => {
+      try {
+        if (sessionStorage.getItem("customer_username")) {
+          const user = sessionStorage.getItem("customer_username") as string;
+          const res = await getUserByUsername(user);
+          console.log(res.data.message);
+          setEmail(res.data.message.email);
+          return;
+        }
+      } catch (e) {
+        alert("Something went wrong");
+      }
+    };
     fetchVoucher();
+    fetchUser();
   }, [router.query.id]);
 
   const handleHold = (key: number) => {
@@ -102,6 +117,7 @@ const Voucher = () => {
               <input
                 className="border-[1px] border-[black] rounded p-[10px] text-[black]"
                 onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
               <p>
                 Enter your email here so that the code can be send to your email
@@ -120,7 +136,7 @@ const Voucher = () => {
               </h1>
             </div>
             <div>
-              <div className="grid grid-cols-6 gap-4">
+              <div className="grid grid-cols-3 gap-3">
                 {voucher ? (
                   voucher.map((item: GetVoucher, key) => (
                     <div
