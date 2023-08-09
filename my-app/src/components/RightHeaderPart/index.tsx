@@ -74,12 +74,12 @@ const RightHeaderPart = () => {
         </li>
         {!token && (
           <li>
-            <Button
+            <a
               onClick={handleLogin}
               className="text-[white] handjet link link-underline link-underline-black"
             >
               Login
-            </Button>
+            </a>
           </li>
         )}
         {token && (
