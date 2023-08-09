@@ -20,14 +20,14 @@ const AddCategory = () => {
       return;
     }
     formData.append("category", category);
-    formData.append("categoryFile", categoryFile);
-    const res = await postCategory(formData);
-    console.log(res);
-    if (res.status === 200) {
+    formData.append("image", categoryFile);
+    try {
+      const res = await postCategory(formData);
+      console.log(res);
       alert("Category added");
       setCategoryFile(undefined);
       setCategory("");
-    } else {
+    } catch (e) {
       alert("Category is not added");
     }
   };
@@ -36,7 +36,7 @@ const AddCategory = () => {
       <AdminHeader />
       <div className="flex flex-col align-center justify-center px-[100px]">
         <div>
-          <h1 className="text-[30px]">Add Voucher</h1>
+          <h1 className="text-[30px]">Add Category</h1>
         </div>
         <div className="flex flex-col align-center justify-center bg-white px-[10px] rounded">
           <div>
